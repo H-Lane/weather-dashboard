@@ -1,10 +1,16 @@
 body {
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    font-size: medium;
-    display: flex;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-size: medium;
 }
 
 header {
-    background-image: linear-gradient(to right, rgb(73, 133, 212) , rgb(51, 2, 187));
+  background-image: linear-gradient(
+    to right,
+    rgb(73, 133, 212),
+    rgb(51, 2, 187)
+  );
+  color: white;
+  margin-bottom: 5px;
+  height: 100%;
 }
-
