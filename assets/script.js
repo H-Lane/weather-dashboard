@@ -17,8 +17,8 @@ function handleSearchSubmit(event) {
 
   localStorage.setItem(`searches`, JSON.stringify(searchHistory));
 
-  //   getWeatherDataApi()
   submitCityNameApiRequest();
+//   fetchWeatherDataApi();
 }
 
 function submitCityNameApiRequest() {
@@ -30,17 +30,28 @@ function submitCityNameApiRequest() {
     })
     .then(function (data) {
       for (let i = 0; i < data.length; i++) {
-        // const lat = data[i].lat;
-        // const lon = data[i].lon;
         cityArray.push(data[i]);
+        console.log(cityArray)
       }
     });
 }
 
-// async function getWeatherDataApi() {
-//     let cityCoords = await submitCityNameApiRequest();
-//     console.log(cityCoords);
-// }
+async function fetchWeatherDataApi() {
+  await submitCityNameApiRequest();
+  let cityLat = cityArray[0].lat;
+  let cityLon = cityArray[0].lon;
+  const cityWeatherUrl = `api.openweathermap.org/data/2.5/forecast?lat=${cityLat}&lon=${cityLon}&appid=26fdb0f1c088de04bafa78b85c21be83`
+
+  fetch(cityWeatherUrl)
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (data) {
+    console.log(data)
+  })
+
+  cityArray.length = 0;
+}
 
 function handleForecastPopulation(data) {}
 
