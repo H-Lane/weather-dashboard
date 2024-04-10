@@ -18,7 +18,7 @@ function handleSearchSubmit(event) {
   localStorage.setItem(`searches`, JSON.stringify(searchHistory));
 
   submitCityNameApiRequest();
-//   fetchWeatherDataApi();
+  fetchWeatherDataApi();
 }
 
 function submitCityNameApiRequest() {
@@ -31,7 +31,7 @@ function submitCityNameApiRequest() {
     .then(function (data) {
       for (let i = 0; i < data.length; i++) {
         cityArray.push(data[i]);
-        console.log(cityArray)
+        // console.log(cityArray)
       }
     });
 }
@@ -40,17 +40,19 @@ async function fetchWeatherDataApi() {
   await submitCityNameApiRequest();
   let cityLat = cityArray[0].lat;
   let cityLon = cityArray[0].lon;
-  const cityWeatherUrl = `api.openweathermap.org/data/2.5/forecast?lat=${cityLat}&lon=${cityLon}&appid=26fdb0f1c088de04bafa78b85c21be83`
+  const cityWeatherUrl = `api.openweathermap.org/data/2.5/forecast?lat=${cityLat}&lon=${cityLon}&appid=26fdb0f1c088de04bafa78b85c21be83` 
+  //to call the CURRENT WEATHER just run this same url replacing forecast with weather
+  console.log(cityWeatherUrl);
 
-  fetch(cityWeatherUrl)
-  .then(function (response) {
-    return response.json();
-  })
-  .then(function (data) {
-    console.log(data)
-  })
+//   fetch(cityWeatherUrl)
+//   .then(function (response) {
+//     return response.json();
+//   })
+//   .then(function (data) {
+//     console.log(data)
+//   })
 
-  cityArray.length = 0;
+//   cityArray.length = 0;
 }
 
 function handleForecastPopulation(data) {}
