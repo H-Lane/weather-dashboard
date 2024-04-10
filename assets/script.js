@@ -17,31 +17,37 @@ function handleSearchSubmit(event) {
 
   localStorage.setItem(`searches`, JSON.stringify(searchHistory));
 
-  submitCityNameApiRequest();
   fetchWeatherDataApi();
 }
 
-function submitCityNameApiRequest() {
-  const cityNameUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${searchBarEl.value}&limit=1&appid=3425d908dbea20e1649805cca8ffecfb`;
+// async function submitCityNameApiRequest() {
 
-  return fetch(cityNameUrl)
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-      for (let i = 0; i < data.length; i++) {
-        cityArray.push(data[i]);
-        console.log(cityArray);
-      }
-    });
-}
+//   return fetch(cityNameUrl)
+//   .then(function (response) {
+//     return response.json();
+//   })
+//   .then(function (data) {
+//     return data
+//     for (let i = 0; i < data.length; i++) {
+//       cityArray.push(data[i]);
+//       console.log(cityArray);
+//     }
+//   });
+// }
 
 async function fetchWeatherDataApi() {
-  await submitCityNameApiRequest();
-  let cityLat = cityArray[0].lat;
-  let cityLon = cityArray[0].lon;
+  const cityNameUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${searchBarEl.value}&limit=1&appid=3425d908dbea20e1649805cca8ffecfb`;
+
+  const response = await fetch(cityNameUrl);
+  const data = await response.json();
+
+  let cityLat = data[0].lat;
+  let cityLon = data[0].lon;
+
   const cityWeatherUrl = `api.openweathermap.org/data/2.5/forecast?lat=${cityLat}&lon=${cityLon}&appid=3425d908dbea20e1649805cca8ffecfb`;
-  //to call the CURRENT WEATHER just run this same url replacing forecast with weather
+
+  // //to call the CURRENT WEATHER just run this same url replacing forecast with weather
+
   console.log(cityWeatherUrl);
 
   return fetch(cityWeatherUrl)
@@ -50,7 +56,7 @@ async function fetchWeatherDataApi() {
     })
     .then(function (data) {
       console.log(data);
-      cityArray.length = 0;
+      return data;
     });
 }
 
@@ -66,11 +72,27 @@ function handleForecastCardPopulation(data) {
   const forecastCardWindEl = document.createElement(`p`);
   const forecastCardHumidEl = document.createElement(`p`);
 
-  forecastCardEl.classList.add("card", "five-day-box", "m-auto")
-  forecastCardEl.style.add("width: 15rem;", "height: 20rem;")
-  forecastCardBodyEl.classList.add(`card-body`)
-  forecastCardTitleEl.classList.add("card-title", "pt-2", "pb-3")
-
+  forecastCardEl.classList.add("card", "five-day-box", "m-auto");
+  forecastCardEl.style.width = "15rem;";
+  forecastCardEl.style.height = "20rem;";
+  forecastCardBodyEl.classList.add(`card-body`);
+  forecastCardTitleEl.classList.add("card-title", "pt-2", "pb-3");
+  forecastCardSubtitleEl.classList.add(
+    "card-subtitle",
+    "mb-2",
+    "text-muted",
+    "weather-icon",
+    "p-3"
+  );
+  forecastCardTempEl.classList.add("card-text", "py-2");
+  forecastCardWindEl.classList.add("card-text", "py-2");
+  forecastCardHumidEl.classList.add("card-text", "py-2");
+  forecastCardTempEl.innerHTML =
+    "Temp: " + `<span class="card-temp-value"></span>` + `&deg;F`;
+  forecastCardWindEl.innerHTML =
+    "Wind: " + `<span class="card-wind-value"></span>` + "MPH";
+  forecastCardHumidEl.innerHTML =
+    "Humidity: " + `<span class="card-humidity-value"></span>` + "%";
 }
-
+handleForecastCardPopulation();
 submitBtnEl.addEventListener(`click`, handleSearchSubmit);
