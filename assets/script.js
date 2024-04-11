@@ -2,11 +2,11 @@ const searchBarEl = document.getElementById(`search-bar`);
 const submitBtnEl = document.getElementById(`submit-button`);
 let searchHistory = JSON.parse(localStorage.getItem(`searches`)) || [];
 let cityNameUrl;
+let searchArray = [];
 // My Weather API key --- 26fdb0f1c088de04bafa78b85c21be83
 
 function handleSearchSubmit(event) {
   //make an if statement for if the user doesn't input a valid city name
-  event.preventDefault();
 
   const citySearch = searchBarEl.value;
 
@@ -71,9 +71,11 @@ function populateCurrentWeather(data) {
 }
 
 function populateForecastCards(data) {
+  const forecastContainerEl = document.getElementById(`forecast-container`);
+  forecastContainerEl.innerHTML = "";
+
   for (let i = 0; i < data.list.length; i++) {
     if (data.list[i].dt_txt.includes(`12:00:00`)) {
-      const forecastContainerEl = document.getElementById(`forecast-container`);
       const forecastCardParentEl = document.createElement(`div`);
       const forecastCardBodyEl = document.createElement(`div`);
       const forecastCardDateEl = document.createElement(`h5`);
@@ -120,17 +122,28 @@ function populateForecastCards(data) {
 
 function createPreviousSearches() {
   for (let i = 0; i < searchHistory.length; i++) {
-    let searchArray = [];
-    const previousSearchContainer = document.getElementById(
-      `previous-search-container`
-    );
-    const searchButtonEl = document.createElement(`button`);
-    searchButtonEl.style.width = `100%`;
-    searchButtonEl.style.height = `auto`;
+    if (searchArray.includes(searchHistory[i])) {
+      return;
+    } else {
+      const previousSearchContainer = document.getElementById(
+        `previous-search-container`
+      );
+      const searchButtonEl = document.createElement(`button`);
+      searchButtonEl.style.width = `100%`;
+      searchButtonEl.style.height = `auto`;
 
-    searchButtonEl.textContent = searchHistory[i];
-    previousSearchContainer.appendChild(searchButtonEl);
+      searchButtonEl.textContent = searchHistory[i];
+      previousSearchContainer.appendChild(searchButtonEl);
+      searchArray.push(searchHistory[i]);
+      searchButtonEl.addEventListener(`click`, addPreviousSearch);
+    }
   }
 }
 createPreviousSearches();
+
+function addPreviousSearch(event) {
+  searchBarEl.value = this.textContent;
+  handleSearchSubmit();
+}
+
 submitBtnEl.addEventListener(`click`, handleSearchSubmit);
