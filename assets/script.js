@@ -8,9 +8,13 @@ let searchArray = [];
 function handleSearchSubmit(event) {
   //make an if statement for if the user doesn't input a valid city name
 
-  const citySearch = searchBarEl.value;
+  const citySearch = searchBarEl.value.trim().toLowerCase();
 
-  searchHistory.push(citySearch);
+  if (!citySearch) return;
+
+  if (!searchHistory.includes(citySearch)) {
+    searchHistory.push(citySearch);
+  }
 
   localStorage.setItem(`searches`, JSON.stringify(searchHistory));
 
@@ -20,7 +24,7 @@ function handleSearchSubmit(event) {
   fetchWeatherForecast();
   createPreviousSearches();
 }
-
+// create a function to fetch the lat and lon then call the forecast and current weather functions within that fetch request and pass them the data[0] object
 function fetchWeatherForecast() {
   fetch(cityNameUrl)
     .then(function (response) {
@@ -55,9 +59,11 @@ function fetchCurrentWeather() {
     .then(function (data) {
       //loop through the LIST within this data and pull ONLY the first 5 dt_txt that INCLUDE 12:00:00
       //pass this data to the handleForecastCardPopulation function
+      console.log(data);
       populateCurrentWeather(data);
     });
 }
+
 function populateCurrentWeather(data) {
   const cityDetails = document.getElementById(`city-details`);
   const tempValue = document.getElementById(`temp-value`);
@@ -103,6 +109,7 @@ function populateForecastCards(data) {
       // let dailyWeather = data.list[i];
 
       forecastCardDateEl.textContent = data.list[i].dt_txt;
+      // forecastCardIconEl.textContent = data.list[i].
       forecastCardTempEl.textContent = `Temp: ` + data.list[i].main.temp + `F`;
       forecastCardWindEl.textContent =
         `Wind: ` + data.list[i].wind.speed + `MPH`;
@@ -121,24 +128,23 @@ function populateForecastCards(data) {
 }
 
 function createPreviousSearches() {
-  for (let i = 0; i < searchHistory.length; i++) {
-    if (searchArray.includes(searchHistory[i])) {
-      return;
-    } else {
-      const previousSearchContainer = document.getElementById(
-        `previous-search-container`
-      );
-      const searchButtonEl = document.createElement(`button`);
-      searchButtonEl.style.width = `100%`;
-      searchButtonEl.style.height = `auto`;
+  const previousSearchContainer = document.getElementById(
+    `previous-search-container`
+  );
+  previousSearchContainer.innerHTML = "";
 
-      searchButtonEl.textContent = searchHistory[i];
-      previousSearchContainer.appendChild(searchButtonEl);
-      searchArray.push(searchHistory[i]);
-      searchButtonEl.addEventListener(`click`, addPreviousSearch);
-    }
+  for (let i = 0; i < searchHistory.length; i++) {
+    const searchButtonEl = document.createElement(`button`);
+    searchButtonEl.style.width = `100%`;
+    searchButtonEl.style.height = `auto`;
+    searchButtonEl.style.textTransform = `capitalize`;
+
+    searchButtonEl.textContent = searchHistory[i];
+    previousSearchContainer.appendChild(searchButtonEl);
+    searchButtonEl.addEventListener(`click`, addPreviousSearch);
   }
 }
+
 createPreviousSearches();
 
 function addPreviousSearch(event) {
