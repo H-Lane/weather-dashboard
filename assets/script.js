@@ -17,7 +17,7 @@ function handleSearchSubmit(event) {
 
   localStorage.setItem(`searches`, JSON.stringify(searchHistory));
 
-  citNameUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${searchBarEl.value}&limit=1&appid=3425d908dbea20e1649805cca8ffecfb`;
+  cityNameUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${searchBarEl.value}&limit=1&appid=3425d908dbea20e1649805cca8ffecfb`;
 
   fetchWeatherForecast();
 }
@@ -35,11 +35,12 @@ function fetchWeatherForecast() {
       return response.json();
     })
     .then(function (data) {
+      //loop through the LIST within this data and pull ONLY the first 5 dt_txt that INCLUDE 12:00:00
       //pass this data to the handleForecastCardPopulation function
       console.log(data);
     });
 }
-
+//create a new function using the exact same fetch as above but make it for weather instead of forecast.
 function populateCurrentWeather(data) {}
 
 function populateForecastCards(data) {
@@ -71,5 +72,5 @@ function populateForecastCards(data) {
   forecastCardWindEl.innerHTML = `Wind: <span class="card-wind-value"></span>MPH`;
   forecastCardHumidEl.innerHTML = `Humidity: <span class="card-humidity-value"></span>%`;
 }
-handleForecastCardPopulation();
+
 submitBtnEl.addEventListener(`click`, handleSearchSubmit);
