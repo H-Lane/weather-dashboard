@@ -27,7 +27,10 @@
             id="search-bar"
             placeholder="Enter City Name"
           />
-          <input class="w-100 bg-primary text-white border border-info rounded my-3" type="button" id="submit-button" value="Search">
+          <input class="w-100 bg-primary text-white border border-info rounded my-3 submit-button" type="button" id="submit-button" value="Search">
+          <div id="previous-search-container">
+            <button></button>
+          </div>
         </aside>
         <!-- The main is split into 2 primary divs, the top one is to hold the current weather data from the searched city with temp, wind, and humidity along with an icon detailing if it's currently sunny, cloudy, rainy, etc., the bottom one dynamically populates with 5 separate divs that each hold 1 day of the 5 day weather forecast -->
         <main class="col-10 h-100">
@@ -35,14 +38,15 @@
             class="border border-dark w-100 p-3 d-block"
             id="current-weather-container"
           >
-            <h2 class="mb-4" id="city-details">Dynamic City Name and Date and Symbol</h2>
+            <h2 class="mb-4" id="city-details">Dynamic City Name and Date</h2>
             <p>Temp: <span id="temp-value"></span>&deg;F</p>
             <p>Wind: <span id="wind-value"></span>MPH</p>
             <p>Humidity: <span id="humidity-value"></span>%</p>
           </div>
           <div class="row pt-3" id="forecast-container">
             <h3>5-Day Forecast:</h3>
-            <div class="card five-day-box m-auto" style="width: 15rem; height: 20rem;">
+
+           <div class="card five-day-box m-auto" style="width: 15rem; height: 20rem;">
               <div class="card-body">
                 <h5 class="card-title pt-2 pb-3">Dynamic Date</h5>
                 <h6 class="card-subtitle mb-2 text-muted weather-icon p-3">#WEATHER ICON#</h6>
@@ -51,50 +55,22 @@
                 <p class="card-text py-2">Humidity: <span class="card-humidity-value"></span>%</p>
               </div>
             </div>
-            <div class="card five-day-box m-auto" style="width: 15rem; height: 20rem;">
-              <div class="card-body">
-                <h5 class="card-title pt-2 pb-3">Dynamic Date</h5>
-                <h6 class="card-subtitle mb-2 text-muted weather-icon p-3">#WEATHER ICON#</h6>
-                <p class="card-text py-2">Temp: <span class="card-temp-value"></span>&deg;F</p>
-                <p class="card-text py-2">Wind: <span class="card-wind-value"></span>MPH</p>
-                <p class="card-text py-2">Humidity: <span class="card-humidity-value"></span>%</p>
-              </div>
-            </div>
-            <div class="card five-day-box m-auto" style="width: 15rem; height: 20rem;">
-              <div class="card-body">
-                <h5 class="card-title pt-2 pb-3">Dynamic Date</h5>
-                <h6 class="card-subtitle mb-2 text-muted weather-icon p-3">#WEATHER ICON#</h6>
-                <p class="card-text py-2">Temp: <span class="card-temp-value"></span>&deg;F</p>
-                <p class="card-text py-2">Wind: <span class="card-wind-value"></span>MPH</p>
-                <p class="card-text py-2">Humidity: <span class="card-humidity-value"></span>%</p>
-              </div>
-            </div>
-            <div class="card five-day-box m-auto" style="width: 15rem; height: 20rem;">
-              <div class="card-body">
-                <h5 class="card-title pt-2 pb-3">Dynamic Date</h5>
-                <h6 class="card-subtitle mb-2 text-muted weather-icon p-3">#WEATHER ICON#</h6>
-                <p class="card-text py-2">Temp: <span class="card-temp-value"></span>&deg;F</p>
-                <p class="card-text py-2">Wind: <span class="card-wind-value"></span>MPH</p>
-                <p class="card-text py-2">Humidity: <span class="card-humidity-value"></span>%</p>
-              </div>
-            </div>
-            <div class="card five-day-box m-auto" style="width: 15rem; height: 20rem;">
-              <div class="card-body">
-                <h5 class="card-title pt-2 pb-3">Dynamic Date</h5>
-                <h6 class="card-subtitle mb-2 text-muted weather-icon p-3">#WEATHER ICON#</h6>
-                <p class="card-text py-2">Temp: <span class="card-temp-value"></span>&deg;F</p>
-                <p class="card-text py-2">Wind: <span class="card-wind-value"></span>MPH</p>
-                <p class="card-text py-2">Humidity: <span class="card-humidity-value"></span>%</p>
-              </div>
-            </div>
-        </main>
-      </div>
-    </div>
-    <script src="./assets/script.js"></script>
-    <script
+            
+            
+          </div>
+        </div>
+      </main>
+      
+      <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
+      ></script>
+      <script
+      src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
+      integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U="
+      crossorigin="anonymous"
     ></script>
+      <script src="./assets/script.js"></script>
   </body>
 </html>
